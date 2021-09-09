@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import * as go from "gojs";
 import { ReactDiagram } from "gojs-react";
-import {nodeDataArrayInitialState, linkDataArrayInitialState} from "./diagramInitialState.js"
+import {nodeDataArrayInitialState, linkDataArrayInitialState} from "./diagramInitialStateGoJsObj.js"
 import "./styles.css"
 
 const colors = {
@@ -20,10 +20,12 @@ const colors = {
 };
 
 //========================================== MAIN COMPONENT
-export default function Diagram() {
+export default function Diagram({diagramData}) {
   // State Management
-  const [nodeDataArray, setNodeDataArray] = useState(nodeDataArrayInitialState);
-  const [linkDataArray, setLinkDataArray] = useState(linkDataArrayInitialState);
+  const [nodeDataArray, setNodeDataArray] = useState(diagramData.nodeDataArray);
+  const [linkDataArray, setLinkDataArray] = useState(diagramData.linkDataArray);
+  // const [nodeDataArray, setNodeDataArray] = useState(nodeDataArrayInitialState);
+  // const [linkDataArray, setLinkDataArray] = useState(linkDataArrayInitialState);
   const [skipsDiagramUpdate, setSkipsDiagramUpdate] = useState(false);
 
   // maps for faster state modification
