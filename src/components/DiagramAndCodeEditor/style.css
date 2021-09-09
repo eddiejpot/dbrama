@@ -1,0 +1,39 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.Resizer {
+  background: #ddd;
+  z-index: 1;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding;
+  background-clip: padding-box;
+  position: relative;
+}
+.Resizer:hover {
+  background: #bbb;
+}
+.Resizer:active {
+  background: #999;
+  z-index: 1052;
+}
+.Resizer.horizontal {
+  min-height: 7px;
+  width: 100%;
+  cursor: row-resize;
+}
+.Resizer.vertical {
+  width: 7px;
+  min-width: 7px;
+  cursor: col-resize;
+}
+.Resizer.disabled {
+  cursor: not-allowed;
+}
+.Resizer.disabled:hover {
+  border-color: transparent;
+}
