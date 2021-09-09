@@ -74,7 +74,7 @@ const parseTables = (tablesArr) => {
  *  nodeDataArray: [...]
  *  linkDataArray: [...]
  * }
- * see "../../components/Diagram/diagramInitialState.js" for more info on the object returned
+ * see "../../components/Diagram/diagramInitialStateGoJsObj.js" for more info on the object returned
  */
 export const dbmlToGoJs = (schema) => {
   try {
