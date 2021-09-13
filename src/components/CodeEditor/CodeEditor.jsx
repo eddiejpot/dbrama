@@ -1,17 +1,25 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 // import { render } from "react-dom";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-noconflict/ext-language_tools"
 import "ace-builds/webpack-resolver";
-import {initialStateDbml} from "../../components/Diagram/diagramInitialStateDbml.js";
+import diagramDataInitialStateInDbml from "../../components/Diagram/diagramInitialStateDbml.js";
+import cleanUpCodeFromEditor from "../../utils/parser/codeEditorCleaner.js"
 //========================================== MAIN COMPONENT
 
-export default function CodeEditor() {
+export default function CodeEditor({diagramDbmlData, setDiagramDbmlData}) {
+  const codeEditorRef = useRef(diagramDataInitialStateInDbml);
 
-  function onChange(newValue) {
-    console.log("change", newValue);
+  function onChange(codeFromEditor) {
+    codeEditorRef.current = codeFromEditor;
+    // // console.log("CHANGE", codeFromEditor);
+    // let newstrings = codeFromEditor.split("\n"); 
+    // console.log(newstrings)
+    // parse through and only return completed lines of code
+    const cleanedCode = cleanUpCodeFromEditor(codeFromEditor)
+    setDiagramDbmlData(()=> cleanedCode);
   }
   
   // Render editor
@@ -27,7 +35,7 @@ export default function CodeEditor() {
       showPrintMargin={false}
       showGutter={true}
       highlightActiveLine={true}
-      value={initialStateDbml}
+      value={codeEditorRef.current}
       setOptions={{
       enableBasicAutocompletion: false,
       enableLiveAutocompletion: false,
