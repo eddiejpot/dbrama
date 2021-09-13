@@ -1,4 +1,4 @@
-export const nodeDataArrayInitialState = [
+const nodeDataArrayInitialState = [
     {
       key: "users",
       items: [
@@ -102,7 +102,7 @@ export const nodeDataArrayInitialState = [
     }
   ]
 
-export const linkDataArrayInitialState = [
+const linkDataArrayInitialState = [
     { from: "users", fromPort: "id", to: "orders", toPort: "user_id", text: "O", toText: "M" },
 
     { from: "orders", fromPort: "id", to: "order_items", toPort: "order_id", text: "O", toText: "M" },
@@ -110,3 +110,11 @@ export const linkDataArrayInitialState = [
     { from: "items", fromPort: "id", to: "order_items", toPort: "item_id", text: "O", toText: "M" },
 
   ];
+
+
+const diagramDataInitialStateInGoJs = {
+  nodeDataArray: nodeDataArrayInitialState,
+  linkDataArray: linkDataArrayInitialState,
+}
+
+export default diagramDataInitialStateInGoJs;

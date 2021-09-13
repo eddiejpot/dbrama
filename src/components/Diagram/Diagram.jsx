@@ -159,9 +159,22 @@ export default function Diagram({diagramData}) {
           linkKeyProperty: "id",
         }),
         layout: $(go.TreeLayout, { layerSpacing: 80, nodeSpacing: 50 }),
+        initialScale : 0.8,
         // layout: $(go.ForceDirectedLayout),
       }
     );
+
+    // enable grid view
+    diagram.grid.visible = true;
+    diagram.toolManager.draggingTool.isGridSnapEnabled = true;
+    diagram.toolManager.resizingTool.isGridSnapEnabled = true;
+    diagram.grid =
+      $(go.Panel, go.Panel.Grid,  // or "Grid"
+        { gridCellSize: new go.Size(15, 15) },
+        $(go.Shape, "LineH", { stroke: "#3A3A3A" }),
+        $(go.Shape, "LineV", { stroke: "#3A3A3A" })
+    );
+
 
     // define the Node template, representing an entity
     diagram.nodeTemplate = $(
@@ -280,8 +293,8 @@ export default function Diagram({diagramData}) {
         {
           textAlign: "center",
           font: "bold 14px sans-serif",
-          stroke: "#1967B3",
-          segmentIndex: 0,
+          stroke: colors.orange,
+          segmentIndex: 1.2,
           segmentOffset: new go.Point(NaN, NaN),
           segmentOrientation: go.Link.OrientUpright
         },
@@ -292,8 +305,8 @@ export default function Diagram({diagramData}) {
         {
           textAlign: "center",
           font: "bold 14px sans-serif",
-          stroke: "#1967B3",
-          segmentIndex: -1,
+          stroke: colors.orange,
+          segmentIndex: -2,
           segmentOffset: new go.Point(NaN, NaN),
           segmentOrientation: go.Link.OrientUpright
         },
@@ -301,13 +314,13 @@ export default function Diagram({diagramData}) {
       )
     );
 
+    // turn off animation when diagram updates / loads
+    diagram.animationManager.initialAnimationStyle = go.AnimationManager.None;
+    diagram.model = go.Model.fromJSON(diagram.model.toJSON());
+
     return diagram;
   }
 
-
-  useEffect(() => {
-    
-  });
 
   return (
     
