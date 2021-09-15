@@ -17,6 +17,7 @@ const colors = {
   grey: "#a3a3a3",
   black: "#191919",
   offwhite: "#FAF9F6",
+  white: "#ffffff",
 };
 
 //========================================== MAIN COMPONENT
@@ -158,7 +159,7 @@ export default function Diagram({diagramData}) {
           linkToPortIdProperty: "toPort",
           linkKeyProperty: "id",
         }),
-        layout: $(go.TreeLayout, { layerSpacing: 80, nodeSpacing: 50 }),
+        layout: $(go.TreeLayout, { layerSpacing: 120, nodeSpacing: 50}),
         initialScale : 0.8,
         // layout: $(go.ForceDirectedLayout),
       }
@@ -293,9 +294,10 @@ export default function Diagram({diagramData}) {
         {
           textAlign: "center",
           font: "bold 14px sans-serif",
-          stroke: colors.orange,
-          segmentIndex: 1.2,
+          stroke: colors.white,
+          segmentIndex: 1,
           segmentOffset: new go.Point(NaN, NaN),
+          segmentFraction: 0.1,
           segmentOrientation: go.Link.OrientUpright
         },
         new go.Binding("text", "text")
@@ -305,8 +307,9 @@ export default function Diagram({diagramData}) {
         {
           textAlign: "center",
           font: "bold 14px sans-serif",
-          stroke: colors.orange,
-          segmentIndex: -2,
+          stroke: colors.white,
+          segmentIndex: -1,
+          segmentFraction: 0.33,
           segmentOffset: new go.Point(NaN, NaN),
           segmentOrientation: go.Link.OrientUpright
         },
