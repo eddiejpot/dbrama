@@ -53,12 +53,9 @@ export default function DiagramAndCodeEditor() {
   }
 
   return (
-    <div className="App">
-      {/* <button onClick={()=> setRenderDiagram(!renderDiagram)}>CLICK ME</button> */}
-      <SplitPane split="vertical" minSize={50} defaultSize={450}>
+      <SplitPane split="vertical" minSize={50} defaultSize={450} style={{height: 'calc(100% - 4rem)'}}>
         <CodeEditor diagramDbmlData={diagramDbmlData} setDiagramDbmlData={setDiagramDbmlData}/>
         <DiagramToRender/>
       </SplitPane>
-    </div>
   );
 }

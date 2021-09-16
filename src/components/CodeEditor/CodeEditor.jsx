@@ -45,7 +45,7 @@ export default function CodeEditor({diagramDbmlData, setDiagramDbmlData}) {
       useWorker: false, // disable syntax checker
       }}
       style={{
-        height: '100vh',
+        height: '100%',
         width: '100%',
         // minWidth: '200px',
       }}

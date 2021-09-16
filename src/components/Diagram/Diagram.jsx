@@ -3,22 +3,8 @@ import * as go from "gojs";
 import { ReactDiagram } from "gojs-react";
 import {nodeDataArrayInitialState, linkDataArrayInitialState} from "./diagramInitialStateGoJsObj.js"
 import "./styles.css"
+import colors from "../colors.js";
 
-const colors = {
-  red: "#be4b15",
-  green: "#52ce60",
-  blue: "#6ea5f8",
-  lightred: "#fd8852",
-  lightblue: "#afd4fe",
-  lightgreen: "#b9e986",
-  pink: "#faadc1",
-  purple: "#d689ff",
-  orange: "#fdb400",
-  grey: "#a3a3a3",
-  black: "#191919",
-  offwhite: "#FAF9F6",
-  white: "#ffffff",
-};
 
 //========================================== MAIN COMPONENT
 export default function Diagram({diagramData}) {
@@ -252,7 +238,7 @@ export default function Diagram({diagramData}) {
         $(go.Panel, "TableRow",
           { 
             isPanelMain: true,
-            background: colors.lightblue,
+            background: colors.brightteal,
           },
           $(go.TextBlock, new go.Binding("text", "key"),
             { column: 0,
@@ -294,7 +280,7 @@ export default function Diagram({diagramData}) {
         {
           textAlign: "center",
           font: "bold 14px sans-serif",
-          stroke: colors.white,
+          stroke: colors.orange,
           segmentIndex: 1,
           segmentOffset: new go.Point(NaN, NaN),
           segmentFraction: 0.1,
@@ -307,7 +293,7 @@ export default function Diagram({diagramData}) {
         {
           textAlign: "center",
           font: "bold 14px sans-serif",
-          stroke: colors.white,
+          stroke: colors.orange,
           segmentIndex: -1,
           segmentFraction: 0.33,
           segmentOffset: new go.Point(NaN, NaN),
@@ -320,7 +306,39 @@ export default function Diagram({diagramData}) {
     // turn off animation when diagram updates / loads
     diagram.animationManager.initialAnimationStyle = go.AnimationManager.None;
     diagram.model = go.Model.fromJSON(diagram.model.toJSON());
+    
+    // handle exporting and downloading of diagram
+    document.getElementById("exportDiagramButton").addEventListener("click", makeBlob);
 
+    // When the blob is complete, make an anchor tag for it and use the tag to initiate a download
+    // Works in Chrome, Firefox, Safari, Edge, IE11
+    function myCallback(blob) {
+      var url = window.URL.createObjectURL(blob);
+      var filename = "myBlobFile.png"; // TO FIX: ADD CUSTOM NAME
+
+      var a = document.createElement("a");
+      a.style = "display: none";
+      a.href = url;
+      a.download = filename;
+
+      // IE 11
+      if (window.navigator.msSaveBlob !== undefined) {
+        window.navigator.msSaveBlob(blob, filename);
+        return;
+      }
+
+      document.body.appendChild(a);
+      requestAnimationFrame(function() {
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      });
+    }
+
+    function makeBlob() {
+      var blob = diagram.makeImageData({ background: "white", returnType: "blob", callback: myCallback });
+    }
+    window.addEventListener('DOMContentLoaded', initDiagram);
     return diagram;
   }
 
