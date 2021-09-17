@@ -1,28 +1,32 @@
-import React, { useState, useRef,useContext } from "react";
+import React, { useState, useRef,useContext, useEffect } from "react";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-noconflict/ext-language_tools"
 import "ace-builds/webpack-resolver";
-import cleanUpCodeFromEditor from "../../utils/parser/codeEditorCleaner.js"
 import { DiagramContext } from "../../App.js";
 import { initialState, updateCodeInCodeEditorAction } from "../../utils/reducer.mjs";
 
 //========================================== MAIN COMPONENT
 
 export default function CodeEditor() {
-  // local state management
-  const codeEditorRef = useRef(initialState.dbmlData);
-
   // Retrieve Context
-  const dispatch = useContext(DiagramContext);
+  const { dispatch, diagramData} = useContext(DiagramContext);
+  const {dbmlData} = diagramData;
+  // const dbmlData = useContext(DiagramContext);
+
+  // local state management
+  const codeEditorRef = useRef(dbmlData);
 
   function onChange(codeFromEditor) {
     codeEditorRef.current = codeFromEditor;
-    const cleanedCode = cleanUpCodeFromEditor(codeFromEditor)
-    dispatch(updateCodeInCodeEditorAction(cleanedCode))
+    dispatch(updateCodeInCodeEditorAction(codeFromEditor))
   }
   
+  useEffect(() => {
+    codeEditorRef.current = dbmlData
+  },[dbmlData]);
+
   // Render editor
   return (
     <AceEditor

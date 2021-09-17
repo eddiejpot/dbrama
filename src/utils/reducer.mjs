@@ -13,6 +13,7 @@ export const initialState =
 // set actions for reducer to avoid typos
 export const USER_ACTIONS = {
   UPDATE_CODE_IN_CODE_EDITOR: "UPDATE_CODE_IN_CODE_EDITOR", // user is still working on their code 
+  GET_CODE_FROM_COLLECTIONS: "GET_CODE_FROM_COLLECTIONS",
   CREATE: "CREATE",
   EDIT_AND_SAVE: "EDIT_AND_SAVE",
   DELETE: "DELETE",
@@ -23,7 +24,11 @@ export const diagramReducer = (state, action) => {
   switch (action.type) {
 
     case USER_ACTIONS.UPDATE_CODE_IN_CODE_EDITOR:
-      return {...state, dbmlData: action.payload.dbmlData};
+      return {...state, dbmlData: action.payload.dbmlCode};
+
+    case USER_ACTIONS.GET_CODE_FROM_COLLECTIONS:
+      const {title, dbmlData, userId} = action.payload.diagramData
+      return {...state, title, dbmlData, userId };
 
     case USER_ACTIONS.CREATE:
       return [...state, action.payload.task];
@@ -43,11 +48,22 @@ export const diagramReducer = (state, action) => {
 };
 
 // ACTION FUNCTIONS
-export function updateCodeInCodeEditorAction(cleanDbmlCode) {
+export function getCodeFromColletions(diagramData) {
+  return {
+    type: USER_ACTIONS.GET_CODE_FROM_COLLECTIONS,
+    payload: {
+        diagramData,
+      }
+    }
+  };
+
+
+
+export function updateCodeInCodeEditorAction(dbmlCode) {
   return {
     type: USER_ACTIONS.UPDATE_CODE_IN_CODE_EDITOR,
     payload: {
-        dbmlData: cleanDbmlCode
+        dbmlCode,
       }
     }
   };

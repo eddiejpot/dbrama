@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function NavBar() {
+export default function NavBar({setWillRerender}) {
   const classes = useStyles();
 
   return (

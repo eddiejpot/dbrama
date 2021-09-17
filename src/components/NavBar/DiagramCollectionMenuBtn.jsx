@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState,useContext } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
@@ -7,7 +7,8 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import DraftsIcon from "@material-ui/icons/Drafts";
 import SendIcon from "@material-ui/icons/Send";
-
+import { getCodeFromColletions } from "../../utils/reducer.mjs";
+import { DiagramContext } from "../../App.js";
 import { getAllDiagrams } from "../../utils/dbQueries.mjs";
 
 const StyledMenu = withStyles({
@@ -43,8 +44,13 @@ const StyledMenuItem = withStyles((theme) => ({
 }))(MenuItem);
 
 export default function DiagramCollectionMenuBtn() {
+
+  // Retrieve Context
+  const { dispatch, diagramData} = useContext(DiagramContext);
+  // const dispatch = useContext(DiagramContext);
+
   const [anchorEl, setAnchorEl] = useState(null);
-  const [digramCollectionArr, setDiagramCollectionArr] = useState([])
+  const [digramCollectionArr, setDiagramCollectionArr,willRerenderCodeEditor, setWillRerenderCodeEditor] = useState([])
   // const diagramCollectionArr = useRef([]);
   
 
@@ -60,13 +66,12 @@ export default function DiagramCollectionMenuBtn() {
   // }, []);
 
   const handleClick = (event) => {
-    console.log("CLICKED");
     setAnchorEl(event.currentTarget);
     const fetchData = async () => {
       // const storeId = getCookie('storeId');
       const {allUserDiagrams} = await getAllDiagrams(1);
       // diagramCollectionArr.current = allUserDiagrams;
-      setDiagramCollectionArr(()=>allUserDiagrams)
+      setDiagramCollectionArr(()=>allUserDiagrams);
     };
     fetchData();
   };
@@ -76,11 +81,15 @@ export default function DiagramCollectionMenuBtn() {
     setAnchorEl(null);
   };
 
+  const handleCollectionsClick = (diagramData) => {
+    dispatch(getCodeFromColletions(diagramData));
+  }
+
   const ViewCollection = () => {
     if (digramCollectionArr.length > 0){
       const list = digramCollectionArr.map((diagram)=> {
         return (
-          <StyledMenuItem>
+          <StyledMenuItem key = {diagram.id} onClick={()=>handleCollectionsClick(diagram)}>
             <ListItemText primary= {diagram.title} />
           </StyledMenuItem>
         )

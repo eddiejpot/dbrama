@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useReducer, createContext } from "react";
+import React, { useReducer, createContext,useState } from "react";
 import DiagramAndCodeEditor from './components/DiagramAndCodeEditor/DiagramAndCodeEditor';
 import NavBar from './components/NavBar/NavBar';
 // import Diagram from "./components/Diagram/Diagram.jsx"
@@ -20,9 +20,9 @@ function App() {
 
   return (
     <div className="App">
-        <DiagramContext.Provider value={dispatch}>
+        <DiagramContext.Provider value={{dispatch, diagramData}}>
           <NavBar/>
-          <DiagramAndCodeEditor diagramData={diagramData}/>
+          <DiagramAndCodeEditor/>
         </DiagramContext.Provider>
       </div>
   );

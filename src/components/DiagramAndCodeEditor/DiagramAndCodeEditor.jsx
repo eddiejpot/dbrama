@@ -1,34 +1,40 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import Diagram from "../Diagram/Diagram.jsx"
 import CodeEditor from "../CodeEditor/CodeEditor.jsx";
 import { dbmlToGoJs } from "../../utils/parser/dbmlToGoJsObject.js";
-import diagramDataInitialStateInDbml from "../Diagram/diagramInitialStateDbml.js"
+// import diagramDataInitialStateInDbml from "../Diagram/diagramInitialStateDbml.js"
+import { DiagramContext } from "../../App.js";
 // import diagramDataInitialStateInGoJs from "../Diagram/diagramInitialStateGoJsObj.js"
 import SplitPane from "react-split-pane";
+import cleanUpCodeFromEditor from "../../utils/parser/codeEditorCleaner.js"
 import './style.css';
 
 //========================================== MAIN COMPONENT
-export default function DiagramAndCodeEditor({diagramData}) {
+export default function DiagramAndCodeEditor() {
+  // Retrieve Context
+  const { dispatch, diagramData } = useContext(DiagramContext);
   const {dbmlData} = diagramData;
+
   // Local State
   const [diagramGoJsData, setDiagramGoJsData] = useState();
   const isDataForDiagramReady = useRef(false);
-  const lastDbmlDataWithoutErrors = useRef(diagramDataInitialStateInDbml);
+  const lastDbmlDataWithoutErrors = useRef(dbmlData);
 
   useEffect(() => {
-    // get updated code from codeeditor component in dbml format
-    if (dbmlData.length !== 0){
-      console.log('RENDERING ==========>')
+    // get updated code from codeeditor component in dbml format and clean it
+    const cleanDbmlData = cleanUpCodeFromEditor(dbmlData)
+    if (cleanDbmlData.length !== 0){
+      console.log('RENDERING =>')
       let parseDbmlToGoJs;
 
-      if (dbmlToGoJs(dbmlData) === 'error'){
-        console.log('ERROR IN PARSING ==========>')
+      if (dbmlToGoJs(cleanDbmlData) === 'error'){
+        console.log('ERROR IN PARSING =>')
         parseDbmlToGoJs = dbmlToGoJs(lastDbmlDataWithoutErrors.current);
-        
+
       } else {
-        console.log('DI NOT DETECT ERROR IN PARSING ==========>')
-        lastDbmlDataWithoutErrors.current = dbmlData;
-        parseDbmlToGoJs = dbmlToGoJs(dbmlData);
+        console.log('DI NOT DETECT ERROR IN PARSING =>')
+        lastDbmlDataWithoutErrors.current = cleanDbmlData;
+        parseDbmlToGoJs = dbmlToGoJs(cleanDbmlData);
       }
       // update state
       isDataForDiagramReady.current = true;
