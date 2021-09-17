@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
@@ -7,6 +7,8 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import DraftsIcon from "@material-ui/icons/Drafts";
 import SendIcon from "@material-ui/icons/Send";
+
+import { getAllDiagrams } from "../../utils/dbQueries.mjs";
 
 const StyledMenu = withStyles({
   paper: {
@@ -41,16 +43,53 @@ const StyledMenuItem = withStyles((theme) => ({
 }))(MenuItem);
 
 export default function DiagramCollectionMenuBtn() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [digramCollectionArr, setDiagramCollectionArr] = useState([])
+  // const diagramCollectionArr = useRef([]);
+  
+
+  // useEffect(() => {
+  //   // fetch data on page load
+  //   const fetchData = async () => {
+  //     // const storeId = getCookie('storeId');
+  //     const {allUserDiagrams} = await getAllDiagrams(1);
+  //     diagramCollectionArr.current = allUserDiagrams;
+  //     console.log(allUserDiagrams)
+  //   };
+  //   fetchData();
+  // }, []);
 
   const handleClick = (event) => {
     console.log("CLICKED");
     setAnchorEl(event.currentTarget);
+    const fetchData = async () => {
+      // const storeId = getCookie('storeId');
+      const {allUserDiagrams} = await getAllDiagrams(1);
+      // diagramCollectionArr.current = allUserDiagrams;
+      setDiagramCollectionArr(()=>allUserDiagrams)
+    };
+    fetchData();
   };
+
 
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const ViewCollection = () => {
+    if (digramCollectionArr.length > 0){
+      const list = digramCollectionArr.map((diagram)=> {
+        return (
+          <StyledMenuItem>
+            <ListItemText primary= {diagram.title} />
+          </StyledMenuItem>
+        )
+      })
+      return list
+    }
+    return <h1>Loading</h1>
+  }
+
 
   return (
     <div>
@@ -73,18 +112,9 @@ export default function DiagramCollectionMenuBtn() {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <StyledMenuItem>
-          <ListItemIcon>
-            <SendIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText primary="Create" />
-        </StyledMenuItem>
-        <StyledMenuItem>
-          <ListItemIcon>
-            <DraftsIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText primary="View Collection" />
-        </StyledMenuItem>
+        
+        <ViewCollection />
+
       </StyledMenu>
     </div>
   );
