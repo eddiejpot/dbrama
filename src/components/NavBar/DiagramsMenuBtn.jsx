@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext, useState} from "react";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
@@ -9,6 +9,8 @@ import LibraryAddIcon from "@material-ui/icons/LibraryAdd";
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
 import DiagramCollectionMenuBtn from "./DiagramCollectionMenuBtn.jsx";
 import colors from "../colors.js";
+import { newTemplate } from "../../utils/reducer.mjs";
+import { DiagramContext } from "../../App.js";
 
 const StyledMenu = withStyles({
   paper: {
@@ -57,15 +59,21 @@ const useStyles = makeStyles((theme) => ({
 
 export default function DiagramsMenuBtn() {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const { dispatch, diagramData} = useContext(DiagramContext);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleMenuClose = () => {
     setAnchorEl(null);
   };
+
+  const handleNewTemplateClick = () => {
+    dispatch(newTemplate())
+    handleMenuClose();
+  }
 
   return (
     <div>
@@ -84,19 +92,19 @@ export default function DiagramsMenuBtn() {
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
-        onClose={handleClose}
+        onClose={handleMenuClose}
       >
         <StyledMenuItem>
           <ListItemIcon>
             <LibraryAddIcon fontSize="small" />
           </ListItemIcon>
-          <ListItemText primary="CREATE" />
+          <ListItemText primary="CREATE FROM TEMPLATE" onClick={handleNewTemplateClick}/>
         </StyledMenuItem>
         <StyledMenuItem>
           <ListItemIcon>
             <LibraryBooksIcon fontSize="small" />
           </ListItemIcon>
-          <DiagramCollectionMenuBtn />
+          <DiagramCollectionMenuBtn handleMenuClose={handleMenuClose}/>
         </StyledMenuItem>
       </StyledMenu>
     </div>

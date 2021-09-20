@@ -7,3 +7,19 @@ export const getAllDiagrams = async (userId) => {
   const { data: allDiagrams } = await axios.get(`${BACKEND_URL}/api/diagrams/${userId}`);
   return allDiagrams;
 };
+
+// ================ Edit Selected Diagram
+export const editSelectedDiagram = async (diagramData) => {
+  const {data} = await axios.put(`${BACKEND_URL}/api/diagrams/update/${diagramData.id}`, diagramData);
+};
+
+// ================ Delete Selected Diagram
+export const deleteSelectedDiagram = async (diagramData) => {
+  await axios.delete(`${BACKEND_URL}/api/diagrams/delete/${diagramData.id}`, diagramData);
+};
+
+// ================ Delete Selected Diagram
+export const createDiagram = async (userId, diagramData) => {
+  const {data} = await axios.post(`${BACKEND_URL}/api/diagrams/create/${userId}`, diagramData);
+  return data;
+};

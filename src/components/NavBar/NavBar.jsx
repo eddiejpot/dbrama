@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -8,6 +8,7 @@ import FaceIcon from "@material-ui/icons/Face";
 import AccountTreeIcon from "@material-ui/icons/AccountTree";
 import DiagramsMenuBtn from "./DiagramsMenuBtn.jsx";
 import colors from "../colors.js";
+import SaveDiagram from "../Models/SaveDiagram.jsx"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -73,7 +74,8 @@ export default function NavBar({setWillRerender}) {
 
             <div className={classes.buttonGroup}>
               <DiagramsMenuBtn />
-              <Button className={classes.buttonStyle}>Save Diagram</Button>
+              <SaveDiagram />
+              {/* <Button className={classes.buttonStyle} onClick = {handleClickSaveDiagram}>Save Diagram</Button> */}
               <Button className={classes.buttonStyle} id='exportDiagramButton'>Export</Button>
             </div>
           </div>

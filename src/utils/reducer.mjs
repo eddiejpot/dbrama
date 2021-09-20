@@ -1,3 +1,4 @@
+import { createDiagram, editSelectedDiagram, deleteSelectedDiagram, getAllDiagrams } from "./dbQueries.mjs";
 import diagramDataInitialStateInDbml from "../components/Diagram/diagramInitialStateDbml.js"
 
 
@@ -14,9 +15,8 @@ export const initialState =
 export const USER_ACTIONS = {
   UPDATE_CODE_IN_CODE_EDITOR: "UPDATE_CODE_IN_CODE_EDITOR", // user is still working on their code 
   GET_CODE_FROM_COLLECTIONS: "GET_CODE_FROM_COLLECTIONS",
-  CREATE: "CREATE",
-  EDIT_AND_SAVE: "EDIT_AND_SAVE",
   DELETE: "DELETE",
+  NEW_TEMPLATE: "NEW_TEMPLATE"
 };
 
 // Reducer
@@ -27,20 +27,14 @@ export const diagramReducer = (state, action) => {
       return {...state, dbmlData: action.payload.dbmlCode};
 
     case USER_ACTIONS.GET_CODE_FROM_COLLECTIONS:
-      const {title, dbmlData, userId} = action.payload.diagramData
-      return {...state, title, dbmlData, userId };
+      const {title, dbmlData, userId, id} = action.payload.diagramData;
+      return {...state, title, dbmlData, userId ,id};
 
-    case USER_ACTIONS.CREATE:
-      return [...state, action.payload.task];
-
-    case USER_ACTIONS.EDIT_AND_SAVE:
-      return state.map((task, i) => {
-        if (i === action.payload.taskId)
-          return { ...task, done: action.payload.done };
-        return task;
-      });
     case USER_ACTIONS.DELETE:
-      return state.filter((_task, i) => action.payload.taskId !== i);
+      return initialState;
+
+    case USER_ACTIONS.NEW_TEMPLATE:
+      return initialState;
 
     default:
       return state;
@@ -48,7 +42,7 @@ export const diagramReducer = (state, action) => {
 };
 
 // ACTION FUNCTIONS
-export function getCodeFromColletions(diagramData) {
+export function getCodeFromCollections(diagramData) {
   return {
     type: USER_ACTIONS.GET_CODE_FROM_COLLECTIONS,
     payload: {
@@ -68,35 +62,32 @@ export function updateCodeInCodeEditorAction(dbmlCode) {
     }
   };
 
-export function createAction(data) {
-  const {title, dbmlData, userId} = data;
+export function newTemplate() {
   return {
-    type: USER_ACTIONS.CREATE,
-    payload: {
-      diagramData: {
-        title,
-        dbmlData,
-        userId,
-      }
+    type: USER_ACTIONS.NEW_TEMPLATE,
     }
   };
+
+  
+export function deleteAction(diagramData) {
+    deleteSelectedDiagram(diagramData)
+    return {
+      type: USER_ACTIONS.DELETE,
+    };
+  }
+  
+
+// PURE DB FUNCTIONS
+export async function getAllUsersDiagramsAction(userId) {
+  const {allUserDiagrams} = await getAllDiagrams(1);
+  return allUserDiagrams;
+} 
+
+export function editAndSaveAction(diagramData) {
+  // send query to edit
+  editSelectedDiagram(diagramData)
 }
 
-export function editAndSaveAction(taskId, done) {
-  return {
-    type: USER_ACTIONS.EDIT_AND_SAVE,
-    payload: {
-      taskId,
-      done
-    }
-  };
-}
-
-export function deleteAction(taskId) {
-  return {
-    type: USER_ACTIONS.DELETE,
-    payload: {
-      taskId
-    }
-  };
+export function createAction(usersId , diagramData) {
+  createDiagram(usersId , diagramData)
 }

@@ -7,9 +7,11 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import DraftsIcon from "@material-ui/icons/Drafts";
 import SendIcon from "@material-ui/icons/Send";
-import { getCodeFromColletions } from "../../utils/reducer.mjs";
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { getCodeFromCollections, deleteAction, getAllUsersDiagramsAction } from "../../utils/reducer.mjs";
 import { DiagramContext } from "../../App.js";
-import { getAllDiagrams } from "../../utils/dbQueries.mjs";
+// import { getAllDiagrams } from "../../utils/dbQueries.mjs";
 
 const StyledMenu = withStyles({
   paper: {
@@ -27,7 +29,7 @@ const StyledMenu = withStyles({
       vertical: "top",
       horizontal: "left"
     }}
-    style={{ marginLeft: "1rem" }}
+    style={{ marginLeft: "3rem" }}
     {...props}
   />
 ));
@@ -43,33 +45,20 @@ const StyledMenuItem = withStyles((theme) => ({
   }
 }))(MenuItem);
 
-export default function DiagramCollectionMenuBtn() {
+export default function DiagramCollectionMenuBtn({handleMenuClose}) {
 
   // Retrieve Context
   const { dispatch, diagramData} = useContext(DiagramContext);
   // const dispatch = useContext(DiagramContext);
 
   const [anchorEl, setAnchorEl] = useState(null);
-  const [digramCollectionArr, setDiagramCollectionArr,willRerenderCodeEditor, setWillRerenderCodeEditor] = useState([])
-  // const diagramCollectionArr = useRef([]);
-  
-
-  // useEffect(() => {
-  //   // fetch data on page load
-  //   const fetchData = async () => {
-  //     // const storeId = getCookie('storeId');
-  //     const {allUserDiagrams} = await getAllDiagrams(1);
-  //     diagramCollectionArr.current = allUserDiagrams;
-  //     console.log(allUserDiagrams)
-  //   };
-  //   fetchData();
-  // }, []);
+  const [digramCollectionArr, setDiagramCollectionArr] = useState([])
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
     const fetchData = async () => {
       // const storeId = getCookie('storeId');
-      const {allUserDiagrams} = await getAllDiagrams(1);
+      const allUserDiagrams = await getAllUsersDiagramsAction(1);
       // diagramCollectionArr.current = allUserDiagrams;
       setDiagramCollectionArr(()=>allUserDiagrams);
     };
@@ -77,20 +66,31 @@ export default function DiagramCollectionMenuBtn() {
   };
 
 
-  const handleClose = () => {
+  const handleViewCollectionsClose = () => {
     setAnchorEl(null);
   };
 
   const handleCollectionsClick = (diagramData) => {
-    dispatch(getCodeFromColletions(diagramData));
+    dispatch(getCodeFromCollections(diagramData));
+    handleViewCollectionsClose()
+    handleMenuClose()
+  }
+
+  const handleDeleteCollectionsClick = (diagramData) => {
+    dispatch(deleteAction(diagramData));
+    handleViewCollectionsClose()
+    handleMenuClose()
   }
 
   const ViewCollection = () => {
     if (digramCollectionArr.length > 0){
       const list = digramCollectionArr.map((diagram)=> {
         return (
-          <StyledMenuItem key = {diagram.id} onClick={()=>handleCollectionsClick(diagram)}>
-            <ListItemText primary= {diagram.title} />
+          <StyledMenuItem key = {diagram.id}>
+            <ListItemText primary= {diagram.title} onClick={()=>handleCollectionsClick(diagram)} />
+            <IconButton aria-label="delete" onClick={()=>handleDeleteCollectionsClick(diagram)}>
+              <DeleteIcon />
+            </IconButton>
           </StyledMenuItem>
         )
       })
@@ -119,7 +119,7 @@ export default function DiagramCollectionMenuBtn() {
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
-        onClose={handleClose}
+        onClose={handleViewCollectionsClose}
       >
         
         <ViewCollection />

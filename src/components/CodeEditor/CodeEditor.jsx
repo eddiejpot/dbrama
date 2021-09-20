@@ -13,7 +13,6 @@ export default function CodeEditor() {
   // Retrieve Context
   const { dispatch, diagramData} = useContext(DiagramContext);
   const {dbmlData} = diagramData;
-  // const dbmlData = useContext(DiagramContext);
 
   // local state management
   const codeEditorRef = useRef(dbmlData);

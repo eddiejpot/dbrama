@@ -1,23 +1,23 @@
 
 const diagramDataInitialStateInDbml = `
-//// -- LEVEL 1
-//// -- Tables and References
+//// -- TABLES AND REFERENCES (TEMPLATE)
 
 // Creating tables
 Table users{
-  // auto-increment
-  id int [pk, increment]
+  id int [pk]
   user_name varchar
   password varchar
   email email
   country_code int
 }
+
 Table orders {
   id int [pk]
-  user_id int
+  user_id 
   order_status varchar
   receipt_num int
  }
+ 
 Table items {
   id int [pk]
   name varchar
@@ -35,10 +35,9 @@ Table items {
   item_id int
   quantity int
  }
+ 
 // Creating references
-// You can also define relaionship separately
 // > many-to-one; < one-to-many; - one-to-one
-// Ref: users.country_code > countries.code  
 Ref: users.id < orders.user_id
 Ref: users.country_code - countries.id
 Ref: orders.id < order_items.order_id
