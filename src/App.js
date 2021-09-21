@@ -1,12 +1,8 @@
 import './App.css';
-import React, { useReducer, createContext,useState } from "react";
+import React, { useReducer, createContext, useState, useRef, useEffect } from "react";
 import DiagramAndCodeEditor from './components/DiagramAndCodeEditor/DiagramAndCodeEditor';
 import NavBar from './components/NavBar/NavBar';
-// import Diagram from "./components/Diagram/Diagram.jsx"
-// import CodeEditor from "./components/CodeEditor/CodeEditor.jsx"
-// import { dbmlToGoJs } from "./utils/parser/dbmlToGoJsObject.js";
-// import {initialStateDbml} from "./components/Diagram/diagramInitialStateDbml.js"
-// import SplitPane from "react-split-pane";
+import Popper from './components/Models/Popper.jsx'
 
 // import reducer module
 import { diagramReducer, initialState } from "./utils/reducer.mjs";
@@ -19,9 +15,10 @@ function App() {
   const [diagramData, dispatch] = useReducer(diagramReducer, initialState);
 
   return (
-    <div className="App">
+    <div className="App" id="App">
         <DiagramContext.Provider value={{dispatch, diagramData}}>
           <NavBar/>
+          <Popper/>
           <DiagramAndCodeEditor/>
         </DiagramContext.Provider>
       </div>
