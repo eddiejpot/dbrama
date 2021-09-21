@@ -1,16 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import * as go from "gojs";
 import { ReactDiagram } from "gojs-react";
 import {nodeDataArrayInitialState, linkDataArrayInitialState} from "./diagramInitialStateGoJsObj.js"
 import "./styles.css"
+import { DiagramContext } from "../../App.js";
 import colors from "../colors.js";
 
-
 //========================================== MAIN COMPONENT
-export default function Diagram({diagramData}) {
+export default function Diagram({diagramGoJsData}) {
+  // Retrieve Context
+  const { dispatch, diagramData} = useContext(DiagramContext);
+  const {title: fileName} = diagramData;
+
   // State Management
-  const [nodeDataArray, setNodeDataArray] = useState(diagramData.nodeDataArray);
-  const [linkDataArray, setLinkDataArray] = useState(diagramData.linkDataArray);
+  const [nodeDataArray, setNodeDataArray] = useState(diagramGoJsData.nodeDataArray);
+  const [linkDataArray, setLinkDataArray] = useState(diagramGoJsData.linkDataArray);
   // const [nodeDataArray, setNodeDataArray] = useState(nodeDataArrayInitialState);
   // const [linkDataArray, setLinkDataArray] = useState(linkDataArrayInitialState);
   const [skipsDiagramUpdate, setSkipsDiagramUpdate] = useState(false);
@@ -314,7 +318,7 @@ export default function Diagram({diagramData}) {
     // Works in Chrome, Firefox, Safari, Edge, IE11
     function myCallback(blob) {
       var url = window.URL.createObjectURL(blob);
-      var filename = "myBlobFile.png"; // TO FIX: ADD CUSTOM NAME
+      var filename = `${fileName}.png`;
 
       var a = document.createElement("a");
       a.style = "display: none";
@@ -344,14 +348,13 @@ export default function Diagram({diagramData}) {
 
 
   return (
-    
-    <ReactDiagram
-      divClassName="diagram-component"
-      initDiagram={initDiagram}
-      nodeDataArray={nodeDataArray}
-      linkDataArray={linkDataArray}
-      skipsDiagramUpdate={skipsDiagramUpdate}
-      onModelChange={handleModelChange}
-    />
+      <ReactDiagram
+        divClassName="diagram-component"
+        initDiagram={initDiagram}
+        nodeDataArray={nodeDataArray}
+        linkDataArray={linkDataArray}
+        skipsDiagramUpdate={skipsDiagramUpdate}
+        onModelChange={handleModelChange}
+      />
   );
 }
