@@ -1,4 +1,4 @@
-import React, {useState,useContext} from 'react';
+import React from 'react';
 import { makeStyles } from "@material-ui/core/styles";
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -6,8 +6,8 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Box from '@material-ui/core/Box';
-import colors from '../colors';
 import AceEditor from "react-ace";
+import colors from '../colors';
 
 const useStyles = makeStyles((theme) => ({
   root:{
@@ -23,6 +23,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+// =============================================
+// ============================== MAIN COMPONENT
+// =============================================
 export default function FaqAccordion() {
   const classes = useStyles();
 
@@ -38,7 +41,6 @@ export default function FaqAccordion() {
             // onLoad={this.onLoad}
             // onChange={this.onChange}
             fontSize={14}
-            // readOnly={true}
             showPrintMargin={true}
             showGutter={false}
             // highlightActiveLine={true}
