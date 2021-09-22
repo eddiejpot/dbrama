@@ -1,70 +1,44 @@
-# Getting Started with Create React App
+# DBRAMA
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## ❓ What:
 
-## Available Scripts
+Made for SWEs who need to visualize their db-schema quickly. The user will enter their commands through an online ide in DBML language and the tables/relationships will appear accordingly. It's a simplied version of [dbdiagram.io](https://dbdiagram.io/home)
 
-In the project directory, you can run:
+Tech Stack / Notable Libraries
 
-### `npm start`
+- React
+- PostgreSQL & Sequelize
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Notable Libraries
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- GoJS (Diagram)
+- react-ace (Code-editor)
+- react-split-pane
 
-### `npm test`
+## 💻 Deployed app
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<!-- prettier-ignore -->
+<a href="https://dbrama.netlify.app/" target="_blank">DBRAMA on Heroku</a>
 
-### `npm run build`
+## ✋ How the app works
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+**DEMO VIDEO (NON-TECHNICAL)**
+Coming Soon
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🌈 Features
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+**MVP**
 
-### `npm run eject`
+- User is able to generate tables and relationships
+- User is able to create and save new tables
+- User is able to edit saved tables
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## 📱 Wire Frame (MVP)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+![Image of user flow ](/readme_images/dbrama-wireframe.jpg)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## 🧠 ERD
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Super simple ERD as the point of this project was to practice more non-db related stuff
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+![Image of ERD](/readme_images/dbrama-erd.jpg)
