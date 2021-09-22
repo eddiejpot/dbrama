@@ -42,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
   buttonGroup: {
     display: "flex",
+    alignItems:"center",
     marginLeft: "20rem",
     "& > *": {
       marginLeft: "2rem"
