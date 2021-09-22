@@ -8,10 +8,13 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-// types: error, warning, info, success
+// =============================================
+// ============================== MAIN COMPONENT
+// =============================================
 export default function CustomSnackBar() {
   // Retrieve Context
   const {  renderSnackBar, snackBarDetails} = useContext(DiagramContext);
+  // types: error, warning, info, success
   const {type, message} = snackBarDetails.current
   
   // state management
@@ -20,10 +23,6 @@ export default function CustomSnackBar() {
   useEffect(() => {
     setOpen(()=>true);
   },[renderSnackBar]);
-
-  // const handleClick = () => {
-  //   setOpen(true);
-  // };
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {

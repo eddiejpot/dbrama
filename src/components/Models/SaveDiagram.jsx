@@ -1,5 +1,8 @@
 import React, {useState,useContext,useRef, useEffect} from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { DiagramContext } from "../../App.js";
+import {createAction, editAndSaveAction} from "../../utils/reducer.mjs"
+import colors from "../colors";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -8,9 +11,6 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
-import { DiagramContext } from "../../App.js";
-import {createAction, editAndSaveAction} from "../../utils/reducer.mjs"
-import colors from "../colors";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,12 +37,13 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
+// =============================================
+// ============================== MAIN COMPONENT
+// =============================================
 export default function SaveDiagram() {
-  
   const classes = useStyles();
   // Retrieve Context
-  const { dispatch, diagramData, renderSnackBar, setRenderSnackBar, snackBarDetails} = useContext(DiagramContext);
-  
+  const { diagramData, renderSnackBar, setRenderSnackBar, snackBarDetails} = useContext(DiagramContext);
   let diagramName = useRef(diagramData.title)
 
   useEffect(() => {
@@ -53,7 +54,6 @@ export default function SaveDiagram() {
 
   const handleClickOpen = () => {
     setOpen(true);
-    console.log(diagramData)
   };
 
   const handleClose = () => {
@@ -147,7 +147,6 @@ export default function SaveDiagram() {
         </DialogContent>
         {diagramData.id ? <Button onClick={handleUpdateSubmit} className={classes.saveButton}>CONFIRM UPDATE</Button> : <Button onClick={handleCreateSubmit} className={classes.saveButton}>CREATE NEW PROJECT</Button>
         }
-        {/* <Button onClick={handleSubmit} className={classes.saveButton}>{diagramData.id ? 'CONFIRM UPDATE' : 'CREATE NEW PROJECT'}</Button> */}
       </Dialog>
     </div>
   );

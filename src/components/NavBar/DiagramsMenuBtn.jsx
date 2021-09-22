@@ -56,10 +56,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-
+// =============================================
+// ============================== MAIN COMPONENT
+// =============================================
 export default function DiagramsMenuBtn() {
   const classes = useStyles();
-  const { dispatch, diagramData} = useContext(DiagramContext);
+  const { dispatch } = useContext(DiagramContext);
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {

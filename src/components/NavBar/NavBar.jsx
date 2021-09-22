@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -6,8 +6,8 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import FaceIcon from "@material-ui/icons/Face";
 import AccountTreeIcon from "@material-ui/icons/AccountTree";
-import DiagramsMenuBtn from "./DiagramsMenuBtn.jsx";
 import colors from "../colors.js";
+import DiagramsMenuBtn from "./DiagramsMenuBtn.jsx";
 import SaveDiagram from "../Models/SaveDiagram.jsx"
 
 const useStyles = makeStyles((theme) => ({
@@ -58,7 +58,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function NavBar({setWillRerender}) {
+// =============================================
+// ============================== MAIN COMPONENT
+// =============================================
+export default function NavBar() {
   const classes = useStyles();
 
   return (

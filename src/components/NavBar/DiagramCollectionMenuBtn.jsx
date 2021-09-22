@@ -1,17 +1,13 @@
-import React, { useEffect, useRef, useState,useContext } from "react";
+import React, { useState,useContext } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import DraftsIcon from "@material-ui/icons/Drafts";
-import SendIcon from "@material-ui/icons/Send";
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { getCodeFromCollections, deleteAction, getAllUsersDiagramsAction } from "../../utils/reducer.mjs";
 import { DiagramContext } from "../../App.js";
-// import { getAllDiagrams } from "../../utils/dbQueries.mjs";
 
 const StyledMenu = withStyles({
   paper: {
@@ -45,11 +41,13 @@ const StyledMenuItem = withStyles((theme) => ({
   }
 }))(MenuItem);
 
+// =============================================
+// ============================== MAIN COMPONENT
+// =============================================
 export default function DiagramCollectionMenuBtn({handleMenuClose}) {
 
   // Retrieve Context
-  const { dispatch, diagramData} = useContext(DiagramContext);
-  // const dispatch = useContext(DiagramContext);
+  const { dispatch } = useContext(DiagramContext);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [digramCollectionArr, setDiagramCollectionArr] = useState([])
@@ -59,12 +57,10 @@ export default function DiagramCollectionMenuBtn({handleMenuClose}) {
     const fetchData = async () => {
       // const storeId = getCookie('storeId');
       const allUserDiagrams = await getAllUsersDiagramsAction(1);
-      // diagramCollectionArr.current = allUserDiagrams;
       setDiagramCollectionArr(()=>allUserDiagrams);
     };
     fetchData();
   };
-
 
   const handleViewCollectionsClose = () => {
     setAnchorEl(null);
