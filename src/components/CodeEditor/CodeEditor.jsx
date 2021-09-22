@@ -1,14 +1,15 @@
-import React, { useState, useRef,useContext, useEffect } from "react";
+import React, { useRef,useContext, useEffect } from "react";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-noconflict/ext-language_tools"
 import "ace-builds/webpack-resolver";
 import { DiagramContext } from "../../App.js";
-import { initialState, updateCodeInCodeEditorAction } from "../../utils/reducer.mjs";
+import { updateCodeInCodeEditorAction } from "../../utils/reducer.mjs";
 
-//========================================== MAIN COMPONENT
-
+// =============================================
+// ============================== MAIN COMPONENT
+// =============================================
 export default function CodeEditor() {
   // Retrieve Context
   const { dispatch, diagramData} = useContext(DiagramContext);
@@ -51,9 +52,7 @@ export default function CodeEditor() {
       style={{
         height: '100%',
         width: '100%',
-        // minWidth: '200px',
       }}
       />
-      // document.getElementById("editorContainer")
   );
 }
