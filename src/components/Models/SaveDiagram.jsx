@@ -1,4 +1,4 @@
-import React, {useState,useContext,useRef} from "react";
+import React, {useState,useContext,useRef, useEffect} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
@@ -14,7 +14,7 @@ import colors from "../colors";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    minWidth: "40vw",
+    minWidth: "30vw",
     padding: "2rem",
   },
   dialogTitle:{
@@ -38,11 +38,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SaveDiagram() {
+  
   const classes = useStyles();
-  const diagramName = useRef()
-
   // Retrieve Context
-  const { dispatch, diagramData} = useContext(DiagramContext);
+  const { dispatch, diagramData, renderSnackBar, setRenderSnackBar, snackBarDetails} = useContext(DiagramContext);
+  
+  let diagramName = useRef(diagramData.title)
+
+  useEffect(() => {
+    diagramName.current = diagramData.title;
+  },[diagramData]);
 
   const [open, setOpen] = useState(false);
 
@@ -56,12 +61,20 @@ export default function SaveDiagram() {
   };
 
 
-  const handleUpdateSubmit = () => {
+  const handleUpdateSubmit = async () => {
     // safety check if there is value in input
     if (diagramName.current.trim() !== ""){
       diagramData.title = diagramName.current;
     }
-    editAndSaveAction(diagramData);
+    const data = await editAndSaveAction(diagramData);
+    //snack bar
+    if (data.id){
+      snackBarDetails.current = {type: 'success', message: `Updated: ${data.title}`}
+      setRenderSnackBar(()=> renderSnackBar + 1);
+    } else {
+      snackBarDetails.current = {type: 'warning', message: `Error Updating: ${data.title}`}
+      setRenderSnackBar(()=> renderSnackBar + 1);
+    }
     setOpen(false);
   };
 
@@ -81,7 +94,7 @@ export default function SaveDiagram() {
       <Button variant="outlined" onClick={handleClickOpen} className={classes.buttonStyle}>
         Save Diagram
       </Button>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={open} onClose={handleClose} >
         <DialogTitle className={classes.dialogTitle}>
           <IconButton
             aria-label="close"
@@ -100,9 +113,17 @@ export default function SaveDiagram() {
           <Typography variant="h6" component="h2" gutterBottom>
             {diagramData.id ? 'Rename Project?' : 'Project Title:'}
           </Typography>
-          {diagramData.id ? null : <Typography gutterBottom >
-            Looks like you were editing from a template. Do you want to create a new project? Give your project a name.
-          </Typography>}
+          {diagramData.id ? null : 
+            <div>
+              <Typography gutterBottom >
+                Looks like you were editing from a template
+              </Typography>
+              <Typography gutterBottom >
+                Do you want to create a new project? Give your project a name.
+              </Typography>
+            </div>
+          }
+
           <TextField
             defaultValue= {diagramData.title}
             autoFocus

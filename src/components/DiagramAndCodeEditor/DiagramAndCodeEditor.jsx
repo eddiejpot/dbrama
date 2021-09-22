@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef, useContext } from "react";
 import Diagram from "../Diagram/Diagram.jsx"
 import CodeEditor from "../CodeEditor/CodeEditor.jsx";
 import { dbmlToGoJs } from "../../utils/parser/dbmlToGoJsObject.js";
+import Typography from "@material-ui/core/Typography";
 // import diagramDataInitialStateInDbml from "../Diagram/diagramInitialStateDbml.js"
 import { DiagramContext } from "../../App.js";
 // import diagramDataInitialStateInGoJs from "../Diagram/diagramInitialStateGoJsObj.js"
@@ -51,16 +52,30 @@ export default function DiagramAndCodeEditor() {
   const DiagramToRender = () =>{
     if (isDataForDiagramReady.current){
       return(
-        <Diagram diagramData = {diagramGoJsData}/>
+        <>
+          <Typography 
+          style = {{
+            position: 'absolute',
+            zIndex: 99,
+            color: 'white',
+            fontSize: '1rem',
+            bottom: '10px',
+            left: '1rem',
+          }}
+          >{`Project: ${diagramData.title}`} </Typography>
+          <Diagram diagramGoJsData = {diagramGoJsData}/>
+        </>
       )
     }
     return <h1>Loading</h1>
   }
 
   return (
-      <SplitPane split="vertical" minSize={50} defaultSize={450} style={{height: 'calc(100% - 4rem)'}}>
+    <div>
+      <SplitPane split="vertical" minSize={50} defaultSize={450} style={{height: 'calc(100% - 4rem)', zIndex:'1',  position: 'absolute'}}>
         <CodeEditor/>
-        <DiagramToRender/>
+          <DiagramToRender/>
       </SplitPane>
+    </div>
   );
 }
