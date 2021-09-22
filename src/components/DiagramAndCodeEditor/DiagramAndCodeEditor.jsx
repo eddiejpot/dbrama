@@ -1,19 +1,19 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
+import Typography from "@material-ui/core/Typography";
+import SplitPane from "react-split-pane";
+import './style.css';
 import Diagram from "../Diagram/Diagram.jsx"
 import CodeEditor from "../CodeEditor/CodeEditor.jsx";
 import { dbmlToGoJs } from "../../utils/parser/dbmlToGoJsObject.js";
-import Typography from "@material-ui/core/Typography";
-// import diagramDataInitialStateInDbml from "../Diagram/diagramInitialStateDbml.js"
 import { DiagramContext } from "../../App.js";
-// import diagramDataInitialStateInGoJs from "../Diagram/diagramInitialStateGoJsObj.js"
-import SplitPane from "react-split-pane";
 import cleanUpCodeFromEditor from "../../utils/parser/codeEditorCleaner.js"
-import './style.css';
 
-//========================================== MAIN COMPONENT
+// =============================================
+// ============================== MAIN COMPONENT
+// =============================================
 export default function DiagramAndCodeEditor() {
   // Retrieve Context
-  const { dispatch, diagramData } = useContext(DiagramContext);
+  const { diagramData } = useContext(DiagramContext);
   const {dbmlData} = diagramData;
 
   // Local State
@@ -47,7 +47,6 @@ export default function DiagramAndCodeEditor() {
     }
 
   },[dbmlData]);
-
 
   const DiagramToRender = () =>{
     if (isDataForDiagramReady.current){
