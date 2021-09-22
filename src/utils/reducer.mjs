@@ -1,7 +1,6 @@
 import { createDiagram, editSelectedDiagram, deleteSelectedDiagram, getAllDiagrams } from "./dbQueries.mjs";
 import diagramDataInitialStateInDbml from "../components/Diagram/diagramInitialStateDbml.js"
 
-
 // Export initial state
 export const initialState = 
   {
@@ -83,11 +82,14 @@ export async function getAllUsersDiagramsAction(userId) {
   return allUserDiagrams;
 } 
 
-export function editAndSaveAction(diagramData) {
+export async function editAndSaveAction(diagramData) {
   // send query to edit
-  editSelectedDiagram(diagramData)
+  const data = await editSelectedDiagram(diagramData);
+  return data;
 }
 
-export function createAction(usersId , diagramData) {
-  createDiagram(usersId , diagramData)
+export async function createAction(usersId , diagramData) {
+  // send query to create 
+  const data = await createDiagram(usersId , diagramData)
+  return data;
 }

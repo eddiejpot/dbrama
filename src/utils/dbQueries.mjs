@@ -11,6 +11,7 @@ export const getAllDiagrams = async (userId) => {
 // ================ Edit Selected Diagram
 export const editSelectedDiagram = async (diagramData) => {
   const {data} = await axios.put(`${BACKEND_URL}/api/diagrams/update/${diagramData.id}`, diagramData);
+  return data;
 };
 
 // ================ Delete Selected Diagram
