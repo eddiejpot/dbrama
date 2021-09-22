@@ -13,9 +13,11 @@ import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  dialogContent: {
     minWidth: "30vw",
     padding: "2rem",
+    display: "flex",
+    flexDirection: "column",
   },
   dialogTitle:{
     textAlign: 'right',
@@ -24,7 +26,14 @@ const useStyles = makeStyles((theme) => ({
   },
   saveButton:{
     padding: "1rem",
-    backgroundColor: "",
+    backgroundColor: colors.teal,
+    width: "90%",
+    alignSelf: "center",
+    margin: "1rem",
+    "&:hover": {
+      backgroundColor: colors.brightteal,
+      color: colors.offwhite,
+    }
   },
   buttonStyle:{
     backgroundColor: colors.gunmetal,
@@ -117,7 +126,7 @@ export default function SaveDiagram() {
             <CloseIcon />
           </IconButton>
         </DialogTitle>
-        <DialogContent  className={classes.root}>
+        <DialogContent  className={classes.dialogContent}>
           <Typography variant="h6" component="h2" gutterBottom>
             {diagramData.id ? 'Rename Project?' : 'Project Title:'}
           </Typography>
