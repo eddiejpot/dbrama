@@ -13,7 +13,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 // =============================================
 export default function CustomSnackBar() {
   // Retrieve Context
-  const {  renderSnackBar, snackBarDetails} = useContext(DiagramContext);
+  const { renderSnackBar, snackBarDetails} = useContext(DiagramContext);
   // types: error, warning, info, success
   const {type, message} = snackBarDetails.current
   
@@ -21,7 +21,11 @@ export default function CustomSnackBar() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    setOpen(()=>true);
+    if (renderSnackBar === 1){
+      setOpen(()=>false)
+    } else {
+      setOpen(()=>true);
+    }
   },[renderSnackBar]);
 
   const handleClose = (event, reason) => {
