@@ -19,7 +19,7 @@ export const deleteSelectedDiagram = async (diagramData) => {
   await axios.delete(`${BACKEND_URL}/api/diagrams/delete/${diagramData.id}`, diagramData);
 };
 
-// ================ Delete Selected Diagram
+// ================ Create New Diagram
 export const createDiagram = async (userId, diagramData) => {
   const {data} = await axios.post(`${BACKEND_URL}/api/diagrams/create/${userId}`, diagramData);
   return data;
