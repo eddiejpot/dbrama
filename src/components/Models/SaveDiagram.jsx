@@ -66,26 +66,34 @@ export default function SaveDiagram() {
     if (diagramName.current.trim() !== ""){
       diagramData.title = diagramName.current;
     }
-    const data = await editAndSaveAction(diagramData);
+    const editedDiagramData = await editAndSaveAction(diagramData);
     //snack bar
-    if (data.id){
-      snackBarDetails.current = {type: 'success', message: `Updated: ${data.title}`}
+    if (editedDiagramData.id){
+      snackBarDetails.current = {type: 'success', message: `Updated: ${editedDiagramData.title}`}
       setRenderSnackBar(()=> renderSnackBar + 1);
     } else {
-      snackBarDetails.current = {type: 'warning', message: `Error Updating: ${data.title}`}
+      snackBarDetails.current = {type: 'warning', message: `Error Updating: ${editedDiagramData.title}`}
       setRenderSnackBar(()=> renderSnackBar + 1);
     }
     setOpen(false);
   };
 
-  const handleCreateSubmit = () => {
+  const handleCreateSubmit = async () => {
     // create
     // safety check if there is value in input
     if (diagramName.current.trim() !== ""){
       diagramData.title = diagramName.current;
     }
     // userId , diagramData
-    createAction(1, diagramData);
+    const createdDiagramData = await createAction(1, diagramData);
+    //snack bar
+    if (createdDiagramData.id){
+      snackBarDetails.current = {type: 'success', message: `Created: ${createdDiagramData.title}`}
+      setRenderSnackBar(()=> renderSnackBar + 1);
+    } else {
+      snackBarDetails.current = {type: 'warning', message: `Error Creating Diagram: ${createdDiagramData.title}`}
+      setRenderSnackBar(()=> renderSnackBar + 1);
+    }
     setOpen(false);
   };
 
