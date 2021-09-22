@@ -18,7 +18,7 @@ Notable Libraries
 ## 💻 Deployed app
 
 <!-- prettier-ignore -->
-<a href="https://dbrama.netlify.app/" target="_blank">DBRAMA on Heroku</a>
+<a href="https://dbrama.netlify.app/" target="_blank">DBRAMA on Netlify</a>
 
 ## ✋ How the app works
 
