@@ -46,7 +46,7 @@ export default function DiagramAndCodeEditor() {
       isDataForDiagramReady.current = false;
     }
 
-  },[dbmlData]);
+  },[dbmlData, diagramData]);
 
   const DiagramToRender = () =>{
     if (isDataForDiagramReady.current){

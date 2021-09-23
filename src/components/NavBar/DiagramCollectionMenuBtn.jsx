@@ -49,7 +49,7 @@ const StyledMenuItem = withStyles((theme) => ({
 export default function DiagramCollectionMenuBtn({handleMenuClose}) {
 
   // Retrieve Context
-  const { dispatch } = useContext(DiagramContext);
+  const { dispatch, renderSnackBar, setRenderSnackBar, snackBarDetails} = useContext(DiagramContext);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [digramCollectionArr, setDiagramCollectionArr] = useState([])
@@ -76,6 +76,10 @@ export default function DiagramCollectionMenuBtn({handleMenuClose}) {
 
   const handleDeleteCollectionsClick = (diagramData) => {
     dispatch(deleteAction(diagramData));
+    // snack bar
+    snackBarDetails.current = {type: 'info', message: `Deleted: ${diagramData.title}`}
+    setRenderSnackBar(()=> renderSnackBar + 1);
+    // close divs
     handleViewCollectionsClose()
     handleMenuClose()
   }

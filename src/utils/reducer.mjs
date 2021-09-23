@@ -30,10 +30,10 @@ export const diagramReducer = (state, action) => {
       return {...state, title, dbmlData, userId ,id};
 
     case USER_ACTIONS.DELETE:
-      return initialState;
+      return {...initialState, title:'template'};
 
     case USER_ACTIONS.NEW_TEMPLATE:
-      return initialState;
+      return {...initialState, title:'template'};
 
     default:
       return state;
