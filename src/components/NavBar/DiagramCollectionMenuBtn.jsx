@@ -6,8 +6,10 @@ import MenuItem from "@material-ui/core/MenuItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
+import CircularProgress from '@mui/material/CircularProgress';
 import { getCodeFromCollections, deleteAction, getAllUsersDiagramsAction } from "../../utils/reducer.mjs";
 import { DiagramContext } from "../../App.js";
+import colors from "../colors";
 
 const StyledMenu = withStyles({
   paper: {
@@ -92,7 +94,7 @@ export default function DiagramCollectionMenuBtn({handleMenuClose}) {
       })
       return list
     }
-    return <h1>Loading</h1>
+    return <div style = {{display: 'none'}}/>
   }
 
 
@@ -109,6 +111,7 @@ export default function DiagramCollectionMenuBtn({handleMenuClose}) {
         }}
       >
         <ListItemText primary="view collection" />
+        {digramCollectionArr.length <= 0 ? <CircularProgress style = {{color: colors.teal, width: '1.5rem', height: '1.5rem', marginLeft: '1rem'}}/> : null}
       </Button>
       <StyledMenu
         // id="customized-menu"
@@ -118,7 +121,7 @@ export default function DiagramCollectionMenuBtn({handleMenuClose}) {
         onClose={handleViewCollectionsClose}
       >
         
-        <ViewCollection />
+        <ViewCollection/>
 
       </StyledMenu>
     </div>
