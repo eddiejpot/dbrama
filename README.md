@@ -23,7 +23,8 @@ Notable Libraries
 ## ✋ How the app works
 
 **DEMO VIDEO (NON-TECHNICAL)**
-Coming Soon
+[![DemoVideo](/readme_images/dbrama-mvp-demo-video-cover-image.jpg)](https://youtu.be/1p-fe7vg4bU 'DemoVideo')
+_Click the image to direct to video_
 
 ## 🌈 Features
 
